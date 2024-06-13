@@ -1,0 +1,17 @@
+{
+    "example-project": {
+        "src": {
+            "main.ts": "console.log('Hello, world!');",
+            "modules": {
+                "chatInterface.ts": "// Chat Interface Module",
+                "conversationManager.ts": "// Conversation Manager Module",
+                "messageLogger.ts": "// Message Logger Module",
+                "uiElements.ts": "// UI Elements Module",
+                "utils.ts": "// Utility Functions Module"
+            },
+            "styles": {
+                "styles.css": "body { background-color: #f0f0f0; }"
+            }
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "name": "jsonToFileLayout",
+    "version": "1.0.0",
+    "description": "A web app that generates a zip file from an json file structure/contents",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "build:css": "tailwindcss -i ./tailwind.css -o ./style.css"
+    },
+    "dependencies": {
+        "archiver": "^5.3.0",
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "tailwindcss": "^3.4.4"
+    }
+}

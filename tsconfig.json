@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      // other compiler options
+    },
+    "include": [
+      "*",  // or your actual source directory
+      "globals.d.ts"
+    ]
+  }
+  

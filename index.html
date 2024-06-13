@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON File Structure to ZIP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-dark-bg text-dark-text dark:bg-light-bg dark:text-light-text">
+    <div class="container mx-auto p-4 max-w-3xl bg-gray-800 text-gray-100 rounded-lg shadow-md dark:bg-white dark:text-black">
+        <h1 class="text-3xl font-bold mb-4">JSON File Structure to ZIP</h1>
+        <div class="flex justify-between mb-4">
+            <button onclick="generateZip()" class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800">Generate ZIP</button>
+            <button onclick="toggleDarkMode()" class="w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 ml-2 dark:bg-gray-700 dark:hover:bg-gray-800">Toggle Light Mode</button>
+        </div>
+        <textarea id="jsonInput" placeholder="Paste your JSON file structure here..." class="w-full p-2 border rounded-md mb-4 h-96 bg-gray-700 text-gray-100 dark:bg-gray-200 dark:text-black"></textarea>
+        <a id="downloadLink" class="hidden text-blue-500 hover:underline dark:text-blue-700">Download ZIP</a>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        function loadTheme() {
+            const theme = localStorage.getItem('theme');
+            if (theme === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadTheme);
+
+        async function generateZip() {
+            const jsonInput = document.getElementById('jsonInput').value;
+            let structure;
+            try {
+                structure = JSON.parse(jsonInput);
+            } catch (e) {
+                alert('Invalid JSON format');
+                return;
+            }
+            const response = await fetch('http://localhost:3000/generate-zip', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ structure })
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const link = document.getElementById('downloadLink');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'file_structure.zip';
+                link.classList.remove('hidden');
+                link.textContent = 'Download ZIP';
+            } else {
+                alert('Failed to generate zip file.');
+            }
+        }
+    </script>
+</body>
+</html>
